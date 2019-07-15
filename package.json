@@ -1,0 +1,26 @@
+{
+  "name": "tutkain",
+  "version": "0.0.1",
+  "description": "Finnish radar data as a radar composite product",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "radar",
+    "finland",
+    "opendata",
+    "fmi"
+  ],
+  "author": "Ville Ilkka",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "iso8601-js-period": "^0.2.1",
+    "jquery": "^3.4.1",
+    "leaflet": "^1.5.1",
+    "leaflet-search": "^2.9.8",
+    "leaflet-timedimension": "^1.1.0",
+    "moment": "^2.24.0"
+  }
+}

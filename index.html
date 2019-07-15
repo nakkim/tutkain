@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Sade- ja ukkostutka - tutkain.info</title>
+  <meta name="description" content="Suomen ja lähialueiden sade- ja ukkostutka-animaatio">
+  <meta name="keywords" content="sade,tutka,ukkonen,ukkostutka,satelliitti">
+  <meta name="rating" content="Safe For Kids"/>
+  <meta name="author" content="Ville Ilkka"/>
+  <meta name="robots" content="index,follow"/>
+  <meta name="robots" content="noodp"/>
+
+  <!-- css -->
+  <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" type="text/css">
+  <link rel="stylesheet" href="node_modules/leaflet-search/dist/leaflet-search.min.css" type="text/css">
+  <link rel="stylesheet" href="style.css" type="text/css">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+
+  <!-- javascript -->
+  <script type="text/javascript" src="node_modules/leaflet/dist/leaflet.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-omnivore/0.3.2/leaflet-omnivore.min.js"></script>
+  <script type="text/javascript" src="node_modules/leaflet-search/dist/leaflet-search.src.js"></script>  
+  <script type="text/javascript" src="node_modules/moment/moment.js"></script>
+  <script type="text/javascript" src="node_modules/iso8601-js-period/iso8601.js"></script>
+  <script type="text/javascript" src="node_modules/leaflet-timedimension/dist/leaflet.timedimension.src.js"></script>
+  <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+
+</head>
+
+<body>
+  <div id="map"></div>
+
+
+</body>
+<script type="text/javascript" src="index.js"></script>
+<script type="text/javascript" src="lightning.js"></script>
+
+<script>
+  saa.tutkain.initMap()
+</script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-143251805-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-143251805-1');
+</script>
+
+
+</html>
