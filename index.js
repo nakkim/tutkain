@@ -77,7 +77,7 @@ var saa = saa || {};
   }
 
   tutkain.locate = function() {
-    saa.tutkain.map.locate({ setView: false, maxZoom: 18 })
+    saa.tutkain.map.locate({ setView: false, maxZoom: 10 })
     saa.tutkain.map.on('locationfound', onLocationFound)
     saa.tutkain.map.on('locationerror', onLocationError)
   }
@@ -91,7 +91,7 @@ var saa = saa || {};
     })
 
     L.marker(e.latlng, { icon: icon }).addTo(saa.tutkain.map)
-    saa.tutkain.map.setView(e.latlng, 9, { animation: true })
+    saa.tutkain.map.setView(e.latlng, parseInt(zoomlevel), { animation: false })
   }
 
   function onLocationError (e) {
