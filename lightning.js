@@ -72,10 +72,11 @@ var saa = saa || {};
       }
     })
 
-    saa.tutkain.flashTimeLayer = L.timeDimension.layer.geoJson(customLayerGround, {
+    saa.tutkain.flashTimeLayer = L.timeDimension.layer.geoJson(customLayerCloud, {
       duration: timePeriod
     }).addTo(saa.lightning.geoLayer);
-    saa.tutkain.flashTimeLayer = L.timeDimension.layer.geoJson(customLayerCloud, {
+
+    saa.tutkain.flashTimeLayer = L.timeDimension.layer.geoJson(customLayerGround, {
       duration: timePeriod
     }).addTo(saa.lightning.geoLayer);
 
