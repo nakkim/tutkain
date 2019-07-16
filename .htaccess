@@ -11,3 +11,7 @@
 <Files *.png>
 Header add "Cache-Control" "max-age=604800"
 </Files>
+
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://tutkain.info [R=301,L]
