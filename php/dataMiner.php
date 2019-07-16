@@ -1,4 +1,5 @@
 <?php
+ini_set('memory_limit', '-1');
 
 /**
  * DataMiner class
@@ -59,7 +60,6 @@ class DataMiner{
         $result1 = [];
         $result2 = [];
         foreach ($data->member as $key => $locations) {            
-
             // coordinates and timestamps
             $latlons = $locations
                     -> children("omso", true)->GridSeriesObservation
