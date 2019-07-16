@@ -141,6 +141,26 @@ body {
   background-color: #f4f4f4;
 }
 
+.leaflet-control-select-source-geo {
+  background-image: url(img/locate.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.leaflet-control-select-source-geo:hover {
+  background-image: url(img/locate-blue.png);
+}
+
+.leaflet-control-select-source-geo:hover, 
+.leaflet-control-select-source-geo:active {
+  background-color: #f4f4f4;
+}
+
 .leaflet-control-select-source-flash {
   background-image: url(img/flash-blue.png);
   background-repeat: no-repeat;

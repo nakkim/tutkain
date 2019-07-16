@@ -3,7 +3,7 @@
 var saa = saa || {};
 
 (function (tutkain, undefined) {
-  // 'use strict'
+  // 'use strict'   ooooor dont.
 
   var useDebug = true
   saa.tutkain.map
@@ -12,8 +12,7 @@ var saa = saa || {};
   var timeDimensionControl
   var mobileUser = false
 
-  // var dataWMS = '//data.fmi.fi/fmi-apikey/f01a92b7-c23a-47b0-95d7-cbcb4a60898b/wms'
-  var dataWMS = 'http://smartmet.dy.fi/wms'
+  // var dataWMS = '//data.fmi.fi/fmi-apikey/apikey/wms'
   var geosrvWMS = '//openwms.fmi.fi/geoserver/Radar/wms'
   var eumetsatWMS = '//eumetview.eumetsat.int/geoserver/wms'
 
@@ -77,6 +76,28 @@ var saa = saa || {};
     return json;
   }
 
+  tutkain.locate = function() {
+    saa.tutkain.map.locate({ setView: false, maxZoom: 18 })
+    saa.tutkain.map.on('locationfound', onLocationFound)
+    saa.tutkain.map.on('locationerror', onLocationError)
+  }
+
+  function onLocationFound (e) {
+    var icon = L.icon({
+      iconUrl: 'img/blue-pushpin.png',
+      iconSize: [32, 32],
+      iconAnchor: [10, 32],
+      popupAnchor: [0, 0]
+    })
+
+    L.marker(e.latlng, { icon: icon }).addTo(saa.tutkain.map)
+    saa.tutkain.map.setView(e.latlng, 9, { animation: true })
+  }
+
+  function onLocationError (e) {
+    console.log('Error: The Geolocation service failed.')
+  }
+
   tutkain.getTimeData = function (type) {
     var wmsEndPoint = geosrvWMS
     layerName = 'suomi_dbz_eureffin'
@@ -124,7 +145,6 @@ var saa = saa || {};
 
 
   tutkain.initMap = function () {
-
     var lat = parseFloat(latitude)
     var lon = parseFloat(longtitude)
     var zoom = parseInt(zoomlevel)
@@ -133,6 +153,19 @@ var saa = saa || {};
       center: [lat, lon],
       zoom: zoom
     })
+
+    // remove default zoomcontrol and add a new one with custom titles
+    self.map.zoomControl.remove()
+    L.control.zoom({zoomInTitle: 'Lähennä', zoomOutTitle: 'Loitonna'}).addTo(self.map)
+
+    // if theres no location info in localstorage, use latlon bounds
+    if(localStorage.getItem('latitude') == null) {
+      var southWest = new L.LatLng(59.32, 18.29)
+      var northEast = new L.LatLng(70.51, 32.35)
+      var bounds = new L.LatLngBounds(southWest, northEast)
+      self.map.fitBounds(bounds)
+    }
+
     var CartoDB = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: 'abcd',
@@ -152,7 +185,6 @@ var saa = saa || {};
     tutkain.buildSatelliteControl()
     tutkain.buildLightningControl()
     tutkain.buildControl()
-    tutkain.buildMapControl()
 
     var icon = L.icon({
       iconUrl: 'img/blue-pushpin.png',
@@ -173,7 +205,8 @@ var saa = saa || {};
       url: '//nominatim.openstreetmap.org/search?format=json&q={s},finland',
 			jsonpParam: 'json_callback',
 			formatData: formatJSON,
-			minLength: 2,
+      minLength: 2,
+      textPlaceholder: 'Hae...',
       autoType: false,
       autoCollapse: false,
 			marker: new L.Marker([0,0],{
@@ -181,6 +214,9 @@ var saa = saa || {};
       })
     }));
 
+    // add geolocation control and build all map control buttons
+    tutkain.buildGeoLocation()
+    tutkain.buildMapControl()
     tutkain.getTimeData()
   }
 
@@ -312,6 +348,7 @@ var saa = saa || {};
     saa.tutkain.satelliteTimeLayer._availableTimes = []
   }
 
+  // build satellite data toggle button
   tutkain.buildSatelliteControl = function () {
     L.Control.MapController = L.Control.extend({
       onAdd: function (map) {
@@ -319,6 +356,7 @@ var saa = saa || {};
           'div', 'leaflet-bar leaflet-control leaflet-control-custom leaflet-control-select-source-sat'
         )
         container.id = 'toggle-satellite-data'
+        container.title = 'Satelliittikuvat'
         L.DomEvent.disableClickPropagation(container)
 
         return container
@@ -331,6 +369,7 @@ var saa = saa || {};
     L.control.MapController({ position: 'topleft' }).addTo(map)
   }
 
+  // build lightning data toggle button
   tutkain.buildLightningControl = function () {
     L.Control.MapController = L.Control.extend({
       onAdd: function (map) {
@@ -338,6 +377,28 @@ var saa = saa || {};
           'div', 'leaflet-bar leaflet-control leaflet-control-custom leaflet-control-select-source-flash'
         )
         container.id = 'toggle-lightning-data'
+        container.title = 'Salamahavainnot'
+        L.DomEvent.disableClickPropagation(container)
+
+        return container
+      },
+      onRemove: function (map) { }
+    })
+    L.control.MapController = function (opts) {
+      return new L.Control.MapController(opts);
+    }
+    L.control.MapController({ position: 'topleft' }).addTo(map)
+  }
+
+  // build geolocation button
+  tutkain.buildGeoLocation = function () {
+    L.Control.MapController = L.Control.extend({
+      onAdd: function (map) {
+        var container = L.DomUtil.create(
+          'div', 'leaflet-bar leaflet-control leaflet-control-custom leaflet-control-select-source-geo'
+        )
+        container.id = 'toggle-geolocation'
+        container.title = 'Näytä käyttäjän sijainti'
         L.DomEvent.disableClickPropagation(container)
 
         return container
@@ -356,6 +417,7 @@ var saa = saa || {};
       onAdd: function (map) {
         var div = L.DomUtil.create('button', 'map-control-container-settings')
         div.id = 'map-control'
+        div.title = 'Näytä animaatioasetukset'
         div.draggable = 'false'
         L.DomEvent.disableClickPropagation(div)        
 
@@ -372,6 +434,7 @@ var saa = saa || {};
     L.control.MapController({ position: 'topright' }).addTo(map)
   }
 
+  // build animation settings control container
   tutkain.buildMapControl = function () {
     L.Control.MapController = L.Control.extend({
       onAdd: function (map) {
@@ -467,7 +530,7 @@ var saa = saa || {};
     }
     L.control.MapController({ position: 'topright' }).addTo(map)
 
-    // Update the current slider value (each time you drag the slider handle)
+    // Update the current slider value (each time one drags the slider handle)
     var slider = document.getElementById("map-control-container-controller-opacity-range-radar");
     slider.oninput = function() {
       radarOpacity = this.value;
@@ -521,6 +584,7 @@ var saa = saa || {};
       }
     });
 
+    // show/hide lightning observations
     var flashButton = document.getElementById("toggle-lightning-data");
     flashButton.addEventListener("click", function () {
       if(map.hasLayer(saa.lightning.geoLayer)) {
@@ -530,6 +594,13 @@ var saa = saa || {};
         map.addLayer(saa.lightning.geoLayer);
         flashButton.style = 'background-image: url(img/flash-blue.png);'
      }
+    });
+
+    // use geolocation
+    var geolocationButton = document.getElementById("toggle-geolocation");
+    geolocationButton.addEventListener("click", function () {
+      geolocationButton.style = 'background-image: url(img/locate-blue.png);'
+      tutkain.locate()
     });
 
     // show/hide control options
