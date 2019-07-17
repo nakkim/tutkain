@@ -35,6 +35,8 @@ var saa = saa || {};
     lightningTimestep = 15
   }
 
+  var geoLocationGroup = L.layerGroup()
+
   var latitude   = localStorage.getItem('latitude')   ? localStorage.getItem('latitude')   : 60.630556
   var longtitude = localStorage.getItem('longtitude') ? localStorage.getItem('longtitude') : 24.859726
   var zoomlevel  = localStorage.getItem('zoomlevel')  ? localStorage.getItem('zoomlevel')  : 8
@@ -89,8 +91,11 @@ var saa = saa || {};
       iconAnchor: [10, 32],
       popupAnchor: [0, 0]
     })
+    // remove old layers
+    geoLocationGroup.clearLayers()
 
-    L.marker(e.latlng, { icon: icon }).addTo(saa.tutkain.map)
+    L.marker(e.latlng, { icon: icon }).addTo(geoLocationGroup)
+    geoLocationGroup.addTo(saa.tutkain.map)
     saa.tutkain.map.setView(e.latlng, parseInt(zoomlevel), { animation: false })
   }
 
