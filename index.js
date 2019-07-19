@@ -241,8 +241,14 @@ var saa = saa || {};
     tutkain.buildGeoLocation()
     tutkain.buildMapControl()
     tutkain.getTimeData()
-  }
 
+    saa.tutkain.map.on('click', function(e) {        
+      var ctrlDiv = document.getElementById('map-control-container')
+      ctrlDiv.style = 'display:none'
+      collapseOptions = false
+      localStorage.setItem('collapseOptions', false)        
+    })
+  }
 
   saa.tutkain.updateTimedimension = function (data) {
 
