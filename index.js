@@ -66,16 +66,34 @@ var saa = saa || {};
 
     for(var i in rawjson) {
 
-      // if(rawjson[i].address.neighbourhood !== undefined) {
-        
-      // }
+      disp = rawjson[i].display_name
+      // if mobile and str length > 52, cut the tail out
+      console.log(disp.length)
+      console.log(disp.length > 52)
+      if (L.Browser.mobile === true && disp.length > 52) {
+        disp = shortenString(rawjson[i].display_name)
+      }
 
-      disp = rawjson[i].display_name;
       key = disp
-      loc = L.latLng( rawjson[i].lat, rawjson[i].lon );
-      json[ key ] = loc;	//key,value format
+      loc = L.latLng( rawjson[i].lat, rawjson[i].lon )
+      json[ key ] = loc	//key,value format
     }
     return json;
+  }
+
+  function shortenString (string) {
+    var shortString = ''
+    var shortStringArray = string.split(', ')
+    for (var i=0; i<shortStringArray.length; i++) {
+      if ((shortString + shortStringArray[i]).length < 52) {
+        shortString = shortString + shortStringArray[i] + ', '
+      } else {
+        break
+      }
+    }
+    result = shortString.substr(0, shortString.length-2)
+    console.log(result)
+    return result
   }
 
   tutkain.locate = function() {
