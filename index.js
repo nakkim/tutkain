@@ -18,7 +18,7 @@ var saa = saa || {};
 
   var timeInterval     = localStorage.getItem('timeInterval')     ? localStorage.getItem('timeInterval')    : 1
   var showSatellite    = localStorage.getItem('showSatellite')    ? localStorage.getItem('showSatellite')   : false
-  var showFlash        = localStorage.getItem('showFlash')        ? localStorage.getItem('showFlash')       : true  
+  var showFlash        = localStorage.getItem('showFlash')        ? localStorage.getItem('showFlash')       : true
   var animFrameRate    = localStorage.getItem('animFrameRate')    ? localStorage.getItem('animFrameRate')   : 1000
   var collapseOptions  = localStorage.getItem('collapseOptions')  ? localStorage.getItem('collapseOptions') : false
   var radarOpacity     = localStorage.getItem('radarOpacity')     ? localStorage.getItem('radarOpacity')    : 50
@@ -60,8 +60,8 @@ var saa = saa || {};
   //callback that remap fields name
   function formatJSON(rawjson) {
     var json = {},
-        key, 
-        loc, 
+        key,
+        loc,
         disp = [];
 
     for(var i in rawjson) {
@@ -174,7 +174,8 @@ var saa = saa || {};
 
     self.map = L.map('map', {
       center: [lat, lon],
-      zoom: zoom
+      zoom: zoom,
+      minZoom: 5
     })
 
     // remove default zoomcontrol and add a new one with custom titles
@@ -202,9 +203,9 @@ var saa = saa || {};
 
     saa.tutkain.map = self.map
 
-    // build satellite data controller button, 
+    // build satellite data controller button,
     // map open/collapse map control button
-    // and map controls 
+    // and map controls
     tutkain.buildSatelliteControl()
     tutkain.buildLightningControl()
     tutkain.buildControl()
@@ -242,11 +243,11 @@ var saa = saa || {};
     tutkain.buildMapControl()
     tutkain.getTimeData()
 
-    saa.tutkain.map.on('click', function(e) {        
+    saa.tutkain.map.on('click', function(e) {
       var ctrlDiv = document.getElementById('map-control-container')
       ctrlDiv.style = 'display:none'
       collapseOptions = false
-      localStorage.setItem('collapseOptions', false)        
+      localStorage.setItem('collapseOptions', false)
     })
   }
 
@@ -311,11 +312,12 @@ var saa = saa || {};
     var radar = L.tileLayer.wms(geosrvWMS, {
       layers: 'suomi_dbz_eureffin',
       format: 'image/png',
-      tileSize: 512,
+      tileSize: 256,
       transparent: true,
       opacity: radarOpacity/100,
       version: '1.3.0',
-      crs: L.CRS.EPSG3857
+      crs: L.CRS.EPSG3857,
+      bounds: L.latLngBounds(L.latLng(59.96,16.88),L.latLng(69.51,31.59))
     })
 
     // var flash5min = L.tileLayer.wms(dataWMS, {
@@ -333,7 +335,7 @@ var saa = saa || {};
     var satellite = L.tileLayer.wms(eumetsatWMS, {
       layers: 'meteosat:msg_eview',
       format: 'image/png',
-      tileSize: 512,
+      tileSize: 256,
       transparent: true,
       opacity: satOpacity/100,
       version: '1.3.0',
@@ -448,7 +450,7 @@ var saa = saa || {};
         div.id = 'map-control'
         div.title = 'Näytä animaatioasetukset'
         div.draggable = 'false'
-        L.DomEvent.disableClickPropagation(div)        
+        L.DomEvent.disableClickPropagation(div)
 
         var img = L.DomUtil.create('img', 'img-collapse', div)
         img.src = 'img/settings.png'
