@@ -254,7 +254,7 @@ var saa = saa || {};
   saa.tutkain.updateTimedimension = function (data) {
 
     if (L.Browser.mobile) {
-      timeSlider = false
+      timeSlider = true
     }
 
     // if timedimensioncontrol already exists, remove it and all layers first
