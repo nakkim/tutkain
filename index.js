@@ -255,7 +255,6 @@ var saa = saa || {};
 
     if (L.Browser.mobile) {
       timeSlider = false
-      $('.leaflet-bar-timecontrol').css('height','30px')
     }
 
     // if timedimensioncontrol already exists, remove it and all layers first
@@ -291,7 +290,7 @@ var saa = saa || {};
       autoPlay: true,
       timeSlider: timeSlider,
       speedSlider: false,
-      timeZones: ['Local', 'UTC']
+      timeZones: ['Local']
     };
 
     L.Control.TimeDimensionCustom = L.Control.TimeDimension.extend({
