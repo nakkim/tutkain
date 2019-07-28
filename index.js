@@ -23,14 +23,13 @@ var saa = saa || {};
   var collapseOptions  = localStorage.getItem('collapseOptions')  ? localStorage.getItem('collapseOptions') : false
   var radarOpacity     = localStorage.getItem('radarOpacity')     ? localStorage.getItem('radarOpacity')    : 50
   var satOpacity       = localStorage.getItem('satOpacity')       ? localStorage.getItem('satOpacity')      : 40
-
-  var timeSlider = true
+  var timeSlider       = localStorage.getItem('timeSlider')       ? localStorage.getItem('timeSlider')      : true
 
   var layerName = 'suomi_dbz_eureffin'
   var lightningIntervalStart = 5
   var lightningTimestep = 5
 
-  if(showSatellite == 'true') {
+  if(showSatellite == true || showSatellite == 'true') {
     lightningIntervalStart = 15
     lightningTimestep = 15
   }
@@ -47,9 +46,9 @@ var saa = saa || {};
   saa.tutkain.flashTimeLayer
   saa.tutkain.satelliteTimeLayer
 
-  if (L.Browser.mobile) {
-    timeSlider = false
-  }
+  // if (L.Browser.mobile) {
+  //   timeSlider = false
+  // }
 
   function debug(string) {
     if (useDebug) {
@@ -68,7 +67,6 @@ var saa = saa || {};
 
       disp = rawjson[i].display_name
       // if mobile and str length > 52, cut the tail out
-      console.log(disp.length)
       console.log(disp.length > 52)
       if (L.Browser.mobile === true && disp.length > 52) {
         disp = shortenString(rawjson[i].display_name)
@@ -92,7 +90,6 @@ var saa = saa || {};
       }
     }
     result = shortString.substr(0, shortString.length-2)
-    console.log(result)
     return result
   }
 
@@ -124,7 +121,7 @@ var saa = saa || {};
   tutkain.getTimeData = function (type) {
     var wmsEndPoint = geosrvWMS
     layerName = 'suomi_dbz_eureffin'
-    if (showSatellite === true) {
+    if (showSatellite == true || showSatellite == 'true') {
       layerName = 'meteosat:msg_eview_3995'
       wmsEndPoint = eumetsatWMS
     }
@@ -283,6 +280,9 @@ var saa = saa || {};
       timeDimension
     );
 
+    if(timeSlider == 'true') timeSlider = true
+    if(timeSlider == 'false') timeSlider = false    
+
     var timeDimensionControlOptions = {
       player: player,
       timeDimension: timeDimension,
@@ -319,20 +319,8 @@ var saa = saa || {};
       bounds: L.latLngBounds(L.latLng(59.96,16.88),L.latLng(69.51,31.59))
     })
 
-    // var flash5min = L.tileLayer.wms(dataWMS, {
-    //   layers: 'fmi:observation:flashicon',
-    //   format: 'image/png',
-    //   tileSize: 512,
-    //   transparent: true,
-    //   opacity: flashOpacity/100,
-    //   version: '1.3.0',
-    //   crs: L.CRS.EPSG3857,
-    //   interval_start: lightningIntervalStart,
-    //   timestep: lightningTimestep
-    // })
-
     var satellite = L.tileLayer.wms(eumetsatWMS, {
-      layers: 'meteosat:msg_eview',
+      layers: 'meteosat:msg_eview,overlay:ne_10m_admin_0_boundary_lines_land',
       format: 'image/png',
       tileSize: 256,
       transparent: true,
@@ -347,12 +335,6 @@ var saa = saa || {};
       wmsVersion: '1.3.0'
     })
 
-    // saa.tutkain.flashTimeLayer = L.timeDimension.layer.wms(flash5min, {
-    //   updateTimeDimension: false,
-    //   updateTimeDimensionMode: 'replace',
-    //   wmsVersion: '1.3.0'
-    // })
-
     saa.tutkain.satelliteTimeLayer = L.timeDimension.layer.wms(satellite, {
       updateTimeDimension: false,
       updateTimeDimensionMode: 'replace',
@@ -362,9 +344,9 @@ var saa = saa || {};
     saa.tutkain.radarTimeLayer._availableTimes = []
     saa.tutkain.satelliteTimeLayer._availableTimes = []
 
-    if (showSatellite == true) { saa.tutkain.satelliteTimeLayer.addTo(self.map) }
+    // because of local storage
+    if (showSatellite == true || showSatellite == 'true') { saa.tutkain.satelliteTimeLayer.addTo(self.map) }
     saa.tutkain.radarTimeLayer.addTo(self.map)
-    // saa.tutkain.flashTimeLayer.addTo(self.map)
   }
 
   tutkain.reloadTimedimension = function (data) {
@@ -386,6 +368,7 @@ var saa = saa || {};
           'div', 'leaflet-bar leaflet-control leaflet-control-custom leaflet-control-select-source-sat'
         )
         container.id = 'toggle-satellite-data'
+        if(showSatellite == 'true') container.style = 'background-image: url(img/satellite-blue.png);'
         container.title = 'Satelliittikuvat'
         L.DomEvent.disableClickPropagation(container)
 
@@ -551,6 +534,22 @@ var saa = saa || {};
 
         intervalSelect.value = timeInterval
 
+        // toggle speedSlider
+        var slider = L.DomUtil.create('div', 'map-control-container-controller-settings-content', div)
+        slider.textContent = 'Aikavalitsin: '
+        var wrapper = L.DomUtil.create('div', 'content-select', slider)
+        var input = L.DomUtil.create('input', '', wrapper)
+        input.id = 'animation-speedslider-select'
+        input.type = 'checkbox'
+        input.style = 'width:auto; margin-left:0;'
+        if(timeSlider == true || timeSlider == 'true') {
+          input.value = '1'
+          input.setAttribute('checked', 'checked');
+        } else { 
+          input.value = '0'
+          input.removeAttribute('checked');
+        }
+
         return div;
       },
       onRemove: function (map) { }
@@ -650,6 +649,19 @@ var saa = saa || {};
         localStorage.setItem('collapseOptions', true)
       }
     });
+
+    var checkbox = document.getElementById('animation-speedslider-select')
+    checkbox.addEventListener('change', function() {
+      if(this.checked) {
+        timeSlider = true
+        localStorage.setItem('timeSlider',true)
+        saa.tutkain.getTimeData()
+      } else {
+        timeSlider = false
+        localStorage.setItem('timeSlider',false)
+        saa.tutkain.getTimeData()      
+      }
+    })
   }
 
 
