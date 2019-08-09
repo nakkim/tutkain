@@ -29,6 +29,8 @@ var saa = saa || {};
   var lightningIntervalStart = 5
   var lightningTimestep = 5
 
+  var toggleAnimation = 'on'
+
   if(showSatellite == true || showSatellite == 'true') {
     lightningIntervalStart = 15
     lightningTimestep = 15
@@ -279,6 +281,16 @@ var saa = saa || {};
     },
       timeDimension
     );
+
+    saa.tutkain.map.on('click', function(){
+      if (toggleAnimation == 'on') {
+        player.pause()
+        toggleAnimation = 'off'
+      } else {
+        player.release()
+        toggleAnimation = 'on'
+      }
+    })
 
     if(timeSlider == 'true') timeSlider = true
     if(timeSlider == 'false') timeSlider = false    
