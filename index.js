@@ -311,7 +311,7 @@ var saa = saa || {};
     var radar = L.tileLayer.wms(geosrvWMS, {
       layers: 'suomi_dbz_eureffin',
       format: 'image/png',
-      tileSize: 256,
+      tileSize: 512,
       transparent: true,
       opacity: radarOpacity/100,
       version: '1.3.0',
@@ -322,7 +322,7 @@ var saa = saa || {};
     var satellite = L.tileLayer.wms(eumetsatWMS, {
       layers: 'meteosat:msg_eview,overlay:ne_10m_admin_0_boundary_lines_land',
       format: 'image/png',
-      tileSize: 256,
+      tileSize: 512,
       transparent: true,
       opacity: satOpacity/100,
       version: '1.3.0',
