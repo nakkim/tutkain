@@ -31,6 +31,7 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
 
   <!-- javascript -->
+  <script type="text/javascript" src="sw.js"></script>
   <script type="text/javascript" src="node_modules/leaflet/dist/leaflet.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-omnivore/0.3.2/leaflet-omnivore.min.js"></script>
   <script type="text/javascript" src="node_modules/leaflet-search/dist/leaflet-search.src.js"></script>  
@@ -42,8 +43,13 @@
 </head>
 
 <body>
-  <div id="map"></div>
+  <noscript>
+    <div class="noscript-message">
+      <p>Unfortunately tutkain.info requires JavaScript to run properly.</p>
+    </div>
+  </noscript>
 
+  <div id="map"></div>
 
 </body>
 <script type="text/javascript" src="index.js"></script>
@@ -61,6 +67,5 @@
 
   gtag('config', 'UA-143251805-1');
 </script>
-
 
 </html>

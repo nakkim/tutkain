@@ -9,6 +9,12 @@ body {
   /* font-family: 'Roboto Mono', monospace; */
 }
 
+.noscript-message {
+  margin: auto;
+  text-align: center;
+  font-family: 'Roboto Mono', monospace;
+}
+
 #map {
   height: 100%;
   width: 100%;
