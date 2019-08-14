@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 require_once("dataMiner.php");
 date_default_timezone_set('Europe/Helsinki');
 
