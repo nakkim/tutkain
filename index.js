@@ -30,6 +30,7 @@ var saa = saa || {};
   var lightningTimestep = 5
 
   var toggleAnimation = 'on'
+  var isRunning = false
 
   if(showSatellite == true || showSatellite == 'true') {
     lightningIntervalStart = 15
@@ -274,6 +275,7 @@ var saa = saa || {};
       period: period
     });
     saa.tutkain.map.timeDimension = timeDimension;
+
     var player = new L.TimeDimension.Player({
       transitionTime: animFrameRate,
       loop: true,
@@ -281,8 +283,13 @@ var saa = saa || {};
     },
       timeDimension
     );
+    saa.tutkain.player = player
 
     saa.tutkain.map.on('click', function(){
+      if(!isRunning) {
+        saa.tutkain.player.start()
+        isRunning = true
+      }
       if (toggleAnimation == 'on') {
         player.pause()
         toggleAnimation = 'off'
@@ -299,7 +306,7 @@ var saa = saa || {};
       player: player,
       timeDimension: timeDimension,
       position: 'bottomright',
-      autoPlay: true,
+      autoPlay: false,
       timeSlider: timeSlider,
       speedSlider: false,
       timeZones: ['Local']
@@ -359,6 +366,9 @@ var saa = saa || {};
     // because of local storage
     if (showSatellite == true || showSatellite == 'true') { saa.tutkain.satelliteTimeLayer.addTo(self.map) }
     saa.tutkain.radarTimeLayer.addTo(self.map)
+
+    // set latest timestamp and pause animation
+    saa.tutkain.map.timeDimension.setCurrentTime(new Date().getTime())
   }
 
   tutkain.reloadTimedimension = function (data) {
