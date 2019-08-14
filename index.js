@@ -289,6 +289,7 @@ var saa = saa || {};
       if(!isRunning) {
         saa.tutkain.player.start()
         isRunning = true
+        return
       }
       if (toggleAnimation == 'on') {
         player.pause()
