@@ -310,7 +310,8 @@ var saa = saa || {};
       autoPlay: false,
       timeSlider: timeSlider,
       speedSlider: false,
-      timeZones: ['Local']
+      timeZones: ['Local'],
+      timeSliderDragUpdate: true
     };
 
     L.Control.TimeDimensionCustom = L.Control.TimeDimension.extend({
