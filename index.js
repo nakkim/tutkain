@@ -303,11 +303,14 @@ var saa = saa || {};
     if(timeSlider == 'true') timeSlider = true
     if(timeSlider == 'false') timeSlider = false    
 
+    var autoPlay = false
+    if (isRunning == true) autoPlay = true 
+
     var timeDimensionControlOptions = {
       player: player,
       timeDimension: timeDimension,
       position: 'bottomright',
-      autoPlay: false,
+      autoPlay: autoPlay,
       timeSlider: timeSlider,
       speedSlider: false,
       timeZones: ['Local'],
