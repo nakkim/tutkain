@@ -1,5 +1,5 @@
 
-var version = 'v0.06'
+var version = 'v0.07'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {

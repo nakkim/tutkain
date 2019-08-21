@@ -70,7 +70,6 @@ var saa = saa || {};
 
       disp = rawjson[i].display_name
       // if mobile and str length > 52, cut the tail out
-      console.log(disp.length > 52)
       if (L.Browser.mobile === true && disp.length > 52) {
         disp = shortenString(rawjson[i].display_name)
       }
@@ -147,6 +146,17 @@ var saa = saa || {};
         }
       })
     } else {
+      saa.tutkain.map.spin(true, {
+        lines: 14,
+        length: 25,
+        width: 27,
+        radius: 80,
+        scale: 0.35,
+        corners: 1,
+        speed: 1.4,
+        animation: 'spinner-line-fade-quick',
+        color: '#b1b1b1'
+      })
       $.ajax({
         dataType: 'json',
         url: 'php/dataparser.php',
@@ -161,7 +171,11 @@ var saa = saa || {};
           dataString = data
           tutkain.updateTimedimension(data)
           saa.lightning.init(dataString['dimension'], timeInterval)
+        },
+        complete: function() {
+          saa.tutkain.map.spin(false)
         }
+        
       })
     }
   }
