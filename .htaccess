@@ -12,6 +12,8 @@
 # Header add "Cache-Control" "max-age=604800"
 # </Files>
 
+Header set Cache-Control "max-age=0, public"
+
 RewriteEngine On
 RewriteCond %{HTTPS} !on
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
