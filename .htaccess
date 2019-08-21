@@ -12,7 +12,7 @@
 # Header add "Cache-Control" "max-age=604800"
 # </Files>
 
-Header set Cache-Control "max-age=0, public"
+Header set Cache-Control "max-age=86400"
 
 RewriteEngine On
 RewriteCond %{HTTPS} !on
