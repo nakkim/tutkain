@@ -1,5 +1,5 @@
 
-var version = 'v0.07'
+var version = 'v0.08'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
@@ -12,26 +12,6 @@ if ('serviceWorker' in navigator) {
     })
   })
 }
-
-// self.addEventListener('beforeinstallprompt', (e) => {
-//   // Prevent Chrome 67 and earlier from automatically showing the prompt
-//   e.preventDefault();
-//   deferredPrompt = e;
-//   addBtn.style.display = 'block';
-
-//   addBtn.addEventListener('click', (e) => {
-//     addBtn.style.display = 'none';
-//     deferredPrompt.prompt();
-//     deferredPrompt.userChoice.then((choiceResult) => {
-//         if (choiceResult.outcome === 'accepted') {
-//           console.log('User accepted the A2HS prompt');
-//         } else {
-//           console.log('User dismissed the A2HS prompt');
-//         }
-//         deferredPrompt = null;
-//       });
-//   });
-// });
 
 var CACHE_NAME = 'tutkain-cache-';
 var urlsToCache = [
