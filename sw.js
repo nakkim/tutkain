@@ -1,5 +1,5 @@
 
-var version = 'v0.09'
+var version = 'v0.10'
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
@@ -16,7 +16,6 @@ if ('serviceWorker' in navigator) {
 var CACHE_NAME = 'tutkain-cache-';
 var urlsToCache = [
   '/',
-  '/index.html',
   '/style.css'
 ];
 
