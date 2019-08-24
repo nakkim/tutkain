@@ -73,3 +73,10 @@ self.addEventListener('fetch', function(event) {
       })
     )
 })
+
+caches.keys().then(function(names) {
+  for (let name of names)
+    if(name !== CACHE_NAME + version)
+      caches.delete(name);
+});
+
