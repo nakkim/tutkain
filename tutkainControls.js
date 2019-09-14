@@ -129,18 +129,17 @@ var saa = saa || {};
         speedSelect.id = 'animation-speed-select'
 
         speedSelectors = []
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < 5; i++) {
           speedSelectors.push(L.DomUtil.create('option', '', speedSelect))
         }
 
-        speedSelectorText = ['Todella hidas', 'Hidas', 'Tavallinen', 'Nopea']
-        speedSelectorValue = ['5000', '2000', '1000', '500']
-        for (var i = 0; i < 4; i++) {
+        speedSelectorText = ['Todella hidas', 'Hidas', 'Tavallinen', 'Nopea', 'Todella nopea']
+        speedSelectorValue = ['5000', '2000', '1000', '500', '100']
+        for (var i = 0; i < 5; i++) {
           speedSelectors[i].textContent = speedSelectorText[i]
           speedSelectors[i].value = speedSelectorValue[i]
         }
 
-        console.log(saa.tutkain.animFrameRate)
         speedSelect.value = saa.tutkain.animFrameRate
 
         // opacity

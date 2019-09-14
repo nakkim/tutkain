@@ -232,10 +232,10 @@ var saa = saa || {};
     saa.tutkain.map.on('move', function () {
       var lat = map.getCenter().lat
       var lon = map.getCenter().lng
-      var zoom = map.getZoom()
+      zoomlevel = map.getZoom()
       localStorage.setItem('latitude', lat)
       localStorage.setItem('longitude', lon)
-      localStorage.setItem('zoomlevel', zoom)
+      localStorage.setItem('zoomlevel', zoomlevel)
     })
 
     saa.tutkain.map.addControl( new L.Control.Search({
@@ -290,7 +290,7 @@ var saa = saa || {};
     saa.tutkain.map.timeDimension = timeDimension;
 
     var player = new L.TimeDimension.Player({
-      transitionTime: saa.tutkain.animFramerate,
+      transitionTime: parseInt(saa.tutkain.animFrameRate),
       loop: true,
       startOver: true
     },
@@ -386,6 +386,7 @@ var saa = saa || {};
     saa.tutkain.radarTimeLayer.addTo(self.map)
 
     // set latest timestamp and pause animation
+    saa.tutkain.map.timeDimension.prepareNextTimes(1, 12, true);
     saa.tutkain.map.timeDimension.setCurrentTime(new Date().getTime())
   }
 
