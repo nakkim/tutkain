@@ -1,12 +1,11 @@
 <?php
-error_reporting(0);
+// error_reporting(0);
 require_once("dataMiner.php");
 date_default_timezone_set('Europe/Helsinki');
 
 header('Content-Type: application/json');
 
 $timestamp = $_GET["time"];
-// $timestamp = "2017-08-12T16:00:00Z/2017-08-12T16:05:00Z/PT5M";
 
 $times = explode("/",$timestamp);
 $starttime = new DateTime($times[0]);

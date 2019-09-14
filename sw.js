@@ -1,5 +1,9 @@
 
+<<<<<<< HEAD
 var version = 'v0.17'
+=======
+var version = 'v0.22'
+>>>>>>> quickfix
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
