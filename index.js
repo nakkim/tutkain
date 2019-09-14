@@ -290,7 +290,7 @@ var saa = saa || {};
     saa.tutkain.map.timeDimension = timeDimension;
 
     var player = new L.TimeDimension.Player({
-      transitionTime: saa.tutkain.animFramerate,
+      transitionTime: saa.tutkain.animFrameRate,
       loop: true,
       startOver: true
     },
