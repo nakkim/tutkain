@@ -387,7 +387,7 @@ var saa = saa || {};
 
     // set latest timestamp and pause animation
     saa.tutkain.map.timeDimension.prepareNextTimes(1, 12, true);
-    saa.tutkain.map.timeDimension.setCurrentTime(new Date().getTime())
+    // saa.tutkain.map.timeDimension.setCurrentTime(new Date().getTime())
   }
 
   tutkain.reloadTimedimension = function (data) {
