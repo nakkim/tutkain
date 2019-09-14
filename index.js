@@ -232,10 +232,10 @@ var saa = saa || {};
     saa.tutkain.map.on('move', function () {
       var lat = map.getCenter().lat
       var lon = map.getCenter().lng
-      var zoom = map.getZoom()
+      zoomlevel = map.getZoom()
       localStorage.setItem('latitude', lat)
       localStorage.setItem('longitude', lon)
-      localStorage.setItem('zoomlevel', zoom)
+      localStorage.setItem('zoomlevel', zoomlevel)
     })
 
     saa.tutkain.map.addControl( new L.Control.Search({
