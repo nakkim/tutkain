@@ -41,23 +41,25 @@ var saa = saa || {};
     saa.lightning.geoLayer.clearLayers()
 
     var groundLightningStyle = {
-      radius: 4, 
+      radius: 6, 
       fillColor: 'red', 
       fillOpacity: 0.7, 
       stroke: true,
       weight: 1,
       opacity: 0.8,
-      color: 'black'
+      color: 'black',
+      interactive: false
     };
 
     var cloudLightningStyle = {
-      radius: 3, 
+      radius: 5, 
       fillColor: 'violet', 
       fillOpacity: 0.6, 
       stroke: true,
       weight: 1,
       opacity: 0.5,
-      color: 'black'
+      color: 'black',
+      interactive: false
     };
     
     var customLayerGround = L.geoJson(data[0], {
