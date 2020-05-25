@@ -29,7 +29,7 @@ var saa = saa || {};
   saa.tutkain.lightningIntervalStart = 5
   saa.tutkain.lightningTimestep = 5
 
-  var toggleAnimation = 'on'
+  var toggleAnimation = 'off'
   var isRunning = false
 
   if(saa.tutkain.showSatellite == true || saa.tutkain.showSatellite == 'true') {
@@ -191,6 +191,8 @@ var saa = saa || {};
       minZoom: 5
     })
 
+    self.map.doubleClickZoom.disable(); 
+
     // remove default zoomcontrol and add a new one with custom titles
     self.map.zoomControl.remove()
     L.control.zoom({zoomInTitle: 'Lähennä', zoomOutTitle: 'Loitonna'}).addTo(self.map)
@@ -294,17 +296,11 @@ var saa = saa || {};
     saa.tutkain.player = player
 
     saa.tutkain.map.on('click', function(){
-      if(!isRunning) {
+      if(saa.tutkain.player.isPlaying()) {
+        saa.tutkain.player.stop()
+      } else {
         saa.tutkain.player.start()
         isRunning = true
-        return
-      }
-      if (toggleAnimation == 'on') {
-        player.pause()
-        toggleAnimation = 'off'
-      } else {
-        player.release()
-        toggleAnimation = 'on'
       }
     })
 
@@ -312,7 +308,7 @@ var saa = saa || {};
     if(saa.tutkain.timeSlider == 'false') saa.tutkain.timeSlider = false    
 
     var autoPlay = false
-    if (isRunning == true) autoPlay = true 
+    // if (isRunning == true) autoPlay = true 
 
     var timeDimensionControlOptions = {
       player: player,
