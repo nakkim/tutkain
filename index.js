@@ -343,8 +343,8 @@ var saa = saa || {};
       transparent: true,
       opacity: saa.tutkain.radarOpacity/100,
       version: '1.3.0',
-      crs: L.CRS.EPSG3857,
-      bounds: L.latLngBounds(L.latLng(59.96,16.88),L.latLng(69.51,31.59))
+      crs: L.CRS.EPSG3857
+      // bounds: L.latLngBounds(L.latLng(59.96,16.88),L.latLng(69.51,31.59))
     })
 
     var satellite = L.tileLayer.wms(eumetsatWMS, {
