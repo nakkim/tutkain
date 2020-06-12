@@ -127,6 +127,25 @@ body {
   float: right;
 }
 
+.leaflet-control-toggle-info {
+  background-image: url(img/info.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.leaflet-sidebar {
+  max-height: 450px;
+}
+
+.leaflet-sidebar .close {
+  z-index: 100000000;
+}
+
 .leaflet-control-select-source-sat {
   background-image: url(img/satellite.png);
   background-repeat: no-repeat;
@@ -608,3 +627,4 @@ a.timecontrol-play.loading:before {
 .leaflet-control-locate.active.following a {
   color: #51a7f9;
 }
+

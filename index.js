@@ -194,6 +194,7 @@ var saa = saa || {};
     saa.tutkainControl.buildSatelliteControl()
     saa.tutkainControl.buildLightningControl()
     saa.tutkainControl.buildControl()
+    saa.tutkainControl.buildInfo()
 
     var icon = L.icon({
       iconUrl: 'img/blue-pushpin.png',

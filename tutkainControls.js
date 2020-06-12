@@ -56,6 +56,34 @@ var saa = saa || {};
     L.control.MapController({ position: 'topleft' }).addTo(map)
   }
 
+  // build lightning data toggle button
+  tutkainControl.buildInfo = function () {
+    var infoControl = L.Control.extend({
+      options: {
+        position: 'topleft'
+      },
+      onAdd: function (map) {
+        var container = L.DomUtil.create(
+          'div', 'leaflet-bar leaflet-control leaflet-control-custom leaflet-control-toggle-info'
+        )
+
+        var sidebar = L.control.sidebar('sidebar', {
+          position: 'left',
+          closeButton: true
+        });
+        
+        map.addControl(sidebar);
+
+        container.onclick = function(){
+          sidebar.toggle();
+        }
+        container.title = 'Lisätietoja palvelusta'
+        return container
+      }
+    })
+    map.addControl(new infoControl());
+  }
+
   // build open/collapse button
   tutkainControl.buildControl = function () {
     L.Control.MapController = L.Control.extend({
