@@ -95,31 +95,6 @@ var saa = saa || {};
     return result
   }
 
-  tutkain.locate = function() {
-    saa.tutkain.map.locate({ setView: false, maxZoom: 10 })
-    saa.tutkain.map.on('locationfound', onLocationFound)
-    saa.tutkain.map.on('locationerror', onLocationError)
-  }
-
-  function onLocationFound (e) {
-    var icon = L.icon({
-      iconUrl: 'img/blue-pushpin.png',
-      iconSize: [32, 32],
-      iconAnchor: [10, 32],
-      popupAnchor: [0, 0]
-    })
-    // remove old layers
-    geoLocationGroup.clearLayers()
-
-    L.marker(e.latlng, { icon: icon }).addTo(geoLocationGroup)
-    geoLocationGroup.addTo(saa.tutkain.map)
-    saa.tutkain.map.setView(e.latlng, parseInt(zoomlevel), { animation: false })
-  }
-
-  function onLocationError (e) {
-    console.log('Error: The Geolocation service failed.')
-  }
-
   tutkain.getTimeData = function (type) {
     var wmsEndPoint = geosrvWMS
     layerName = 'suomi_dbz_eureffin'
@@ -249,7 +224,18 @@ var saa = saa || {};
     }));
 
     // add geolocation control and build all map control buttons
-    saa.tutkainControl.buildGeoLocation()
+    // saa.tutkainControl.buildGeoLocation()
+    L.control.locate({
+      drawCircle: false,
+      showCompass: false,
+      locateOptions: {
+        maxZoom: 9,
+        enableHighAccuracy: true
+      },
+      showPopup: false,
+      strings: {
+        title: 'Paikanna käyttäjä'
+      }}).addTo(saa.tutkain.map);
     saa.tutkainControl.buildMapControl()
     tutkain.getTimeData()
 

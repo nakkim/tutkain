@@ -56,27 +56,6 @@ var saa = saa || {};
     L.control.MapController({ position: 'topleft' }).addTo(map)
   }
 
-  // build geolocation button
-  tutkainControl.buildGeoLocation = function () {
-    L.Control.MapController = L.Control.extend({
-      onAdd: function (map) {
-        var container = L.DomUtil.create(
-          'div', 'leaflet-bar leaflet-control leaflet-control-custom leaflet-control-select-source-geo'
-        )
-        container.id = 'toggle-geolocation'
-        container.title = 'Näytä käyttäjän sijainti'
-        L.DomEvent.disableClickPropagation(container)
-
-        return container
-      },
-      onRemove: function (map) { }
-    })
-    L.control.MapController = function (opts) {
-      return new L.Control.MapController(opts);
-    }
-    L.control.MapController({ position: 'topleft' }).addTo(map)
-  }
-
   // build open/collapse button
   tutkainControl.buildControl = function () {
     L.Control.MapController = L.Control.extend({
@@ -276,13 +255,6 @@ var saa = saa || {};
         map.addLayer(saa.lightning.geoLayer);
         flashButton.style = 'background-image: url(img/flash-blue.png);'
      }
-    });
-
-    // use geolocation
-    var geolocationButton = document.getElementById("toggle-geolocation");
-    geolocationButton.addEventListener("click", function () {
-      geolocationButton.style = 'background-image: url(img/locate-blue.png);'
-      saa.tutkain.locate()
     });
 
     // show/hide control options

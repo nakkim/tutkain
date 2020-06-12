@@ -600,3 +600,11 @@ a.timecontrol-play.loading:before {
 
 
 }
+
+
+.leaflet-control-locate.active a {
+  color: #51a7f9;
+}
+.leaflet-control-locate.active.following a {
+  color: #51a7f9;
+}

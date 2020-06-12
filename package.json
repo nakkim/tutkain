@@ -22,6 +22,7 @@
     "leaflet-search": "^2.9.8",
     "leaflet-spin": "^1.1.0",
     "leaflet-timedimension": "^1.1.0",
+    "leaflet.locatecontrol": "^0.72.0",
     "moment": "^2.24.0"
   }
 }
