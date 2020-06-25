@@ -17,7 +17,7 @@
   "private": true,
   "dependencies": {
     "iso8601-js-period": "^0.2.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.1",
     "leaflet": "^1.5.1",
     "leaflet-search": "^2.9.8",
     "leaflet-sidebar": "^0.2.0",
