@@ -40,7 +40,7 @@ var saa = saa || {};
   var geoLocationGroup = L.layerGroup()
 
   var latitude   = localStorage.getItem('latitude')   ? localStorage.getItem('latitude')   : 60.630556
-  var longtitude = localStorage.getItem('longtitude') ? localStorage.getItem('longtitude') : 24.859726
+  var longitude = localStorage.getItem('longitude') ? localStorage.getItem('longitude') : 24.859726
   var zoomlevel  = localStorage.getItem('zoomlevel')  ? localStorage.getItem('zoomlevel')  : 8
 
   // observation update interval in ms
@@ -156,13 +156,9 @@ var saa = saa || {};
   }
 
   tutkain.initMap = function () {
-    var lat = parseFloat(latitude)
-    var lon = parseFloat(longtitude)
-    var zoom = parseInt(zoomlevel)
-
     self.map = L.map('map', {
-      center: [lat, lon],
-      zoom: zoom,
+      center: [latitude, longitude],
+      zoom: zoomlevel,
       minZoom: 5
     })
 
@@ -173,7 +169,7 @@ var saa = saa || {};
     L.control.zoom({zoomInTitle: 'Lähennä', zoomOutTitle: 'Loitonna'}).addTo(self.map)
 
     // if theres no location info in localstorage, use latlon bounds
-    if(localStorage.getItem('latitude') == null) {
+    if(localStorage.getItem('latitude') === null) {
       var southWest = new L.LatLng(59.32, 18.29)
       var northEast = new L.LatLng(70.51, 32.35)
       var bounds = new L.LatLngBounds(southWest, northEast)
