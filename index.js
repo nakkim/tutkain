@@ -192,12 +192,6 @@ var saa = saa || {};
     saa.tutkainControl.buildControl()
     saa.tutkainControl.buildInfo()
 
-    var icon = L.icon({
-      iconUrl: 'img/blue-pushpin.png',
-      iconSize:     [32, 32],
-      iconAnchor:   [16, 32]
-    });
-
     saa.tutkain.map.on('move', function () {
       var lat = map.getCenter().lat
       var lon = map.getCenter().lng
@@ -206,19 +200,6 @@ var saa = saa || {};
       localStorage.setItem('longitude', lon)
       localStorage.setItem('zoomlevel', zoomlevel)
     })
-
-    saa.tutkain.map.addControl( new L.Control.Search({
-      url: '//nominatim.openstreetmap.org/search?format=json&q={s},finland',
-			jsonpParam: 'json_callback',
-			formatData: formatJSON,
-      minLength: 2,
-      textPlaceholder: 'Hae...',
-      autoType: false,
-      autoCollapse: false,
-			marker: new L.Marker([0,0],{
-        icon: icon
-      })
-    }));
 
     // add geolocation control and build all map control buttons
     // saa.tutkainControl.buildGeoLocation()
