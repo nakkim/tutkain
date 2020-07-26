@@ -328,16 +328,15 @@ var saa = saa || {};
     var ctrlButton = document.getElementById("map-control");
     ctrlButton.addEventListener("click", function () {
 
-      if(saa.tutkain.collapseOptions == 'true') saa.tutkain.collapseOptions = true
-
+      if(saa.tutkain.collapseOptions === 'true') saa.tutkain.collapseOptions = true
       var ctrlDiv = document.getElementById('map-control-container')
-      if (saa.tutkain.collapseOptions == true) {
+      if (saa.tutkain.collapseOptions === true) {
         ctrlDiv.style = 'display:none'
         saa.tutkain.collapseOptions = false
         localStorage.setItem('collapseOptions', false)
       } else {
         ctrlDiv.style = 'display:inline'
-        collapseOptions = true
+        saa.tutkain.collapseOptions = true
         localStorage.setItem('collapseOptions', true)
       }
     });
