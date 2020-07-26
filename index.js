@@ -30,7 +30,7 @@ var saa = saa || {};
   saa.tutkain.lightningTimestep = 5
 
   saa.tutkain.satelliteImages = ['meteosat:msg_eview', 'meteosat:msg_fog']
-  saa.tutkain.selectedSatelliteProduct = localStorage.getItem('satelliteProduct') ? localStorage.getItem('satelliteProduct') : 3
+  saa.tutkain.selectedSatelliteProduct = localStorage.getItem('satelliteProduct') ? localStorage.getItem('satelliteProduct') : 0
 
   var toggleAnimation = 'off'
   var isRunning = false
