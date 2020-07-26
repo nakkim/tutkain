@@ -29,6 +29,9 @@ var saa = saa || {};
   saa.tutkain.lightningIntervalStart = 5
   saa.tutkain.lightningTimestep = 5
 
+  saa.tutkain.satelliteImages = ['meteosat:msg_eview', 'meteosat:msg_fog']
+  saa.tutkain.selectedSatelliteProduct = localStorage.getItem('satelliteProduct') ? localStorage.getItem('satelliteProduct') : 3
+
   var toggleAnimation = 'off'
   var isRunning = false
 
@@ -333,7 +336,7 @@ var saa = saa || {};
     })
 
     var satellite = L.tileLayer.wms(eumetsatWMS, {
-      layers: 'meteosat:msg_eview,overlay:ne_10m_admin_0_boundary_lines_land',
+      layers: saa.tutkain.satelliteImages[saa.tutkain.selectedSatelliteProduct]+',overlay:ne_10m_admin_0_boundary_lines_land', // meteosat:msg_dust, meteosat:msg_ash, meteosat:msg_airmass
       format: 'image/png',
       tileSize: 512,
       transparent: true,

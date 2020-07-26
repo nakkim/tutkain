@@ -234,6 +234,33 @@ var saa = saa || {};
           input.removeAttribute('checked');
         }
 
+        // satellite image
+        var satelliteContent = L.DomUtil.create('div', 'map-control-container-controller-settings-content', div)
+        satelliteContent.textContent = 'Satelliittikuva: '
+        var productSelect = L.DomUtil.create('select', 'content-select', satelliteContent)
+        productSelect.id = 'satelite-product-select',
+        productSelect.value = saa.tutkain.selectedSatelliteProduct
+
+        var satelliteImages = []
+        for (var i = 0; i < 2; i++) {
+          satelliteImages.push(L.DomUtil.create('option', '', productSelect))
+        }
+
+        var satelliteSelectorText = ['HRV RGB (näkyvä valo)', 'Low Clouds RGB (infrapuna)']
+        var satelliteSelectorValue = ['0', '1', '2', '3']
+        for (var i = 0; i < 2; i++) {
+          satelliteImages[i].textContent = satelliteSelectorText[i]
+          satelliteImages[i].value = satelliteSelectorValue[i]
+        }
+
+        productSelect.value = saa.tutkain.selectedSatelliteProduct
+
+        productSelect.addEventListener("change", function() {
+          saa.tutkain.selectedSatelliteProduct = this.value
+          localStorage.setItem('satelliteProduct', saa.tutkain.selectedSatelliteProduct)
+          saa.tutkain.getTimeData()
+        });
+
         return div;
       },
       onRemove: function (map) { }
