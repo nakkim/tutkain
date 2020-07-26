@@ -56,7 +56,7 @@ var saa = saa || {};
     L.control.MapController({ position: 'topleft' }).addTo(map)
   }
 
-  // build lightning data toggle button
+  // build information box toggle button
   tutkainControl.buildInfo = function () {
     var infoControl = L.Control.extend({
       options: {
@@ -82,6 +82,30 @@ var saa = saa || {};
       }
     })
     map.addControl(new infoControl());
+  }
+
+  // build force reload button
+  tutkainControl.buildReload = function () {
+    L.Control.MapController = L.Control.extend({
+      onAdd: function (map) {
+        var container = L.DomUtil.create(
+          'div', 'leaflet-bar leaflet-control leaflet-control-custom leaflet-control-force-reload'
+        )
+        container.id = 'force-reload'
+        container.title = 'Päivitä havainnot'
+        L.DomEvent.disableClickPropagation(container)
+
+        var image = L.DomUtil.create('div', 'reload-image', container)
+        image.id = 'reload-image'
+
+        return container
+      },
+      onRemove: function (map) { }
+    })
+    L.control.MapController = function (opts) {
+      return new L.Control.MapController(opts);
+    }
+    L.control.MapController({ position: 'topleft' }).addTo(map)
   }
 
   // build open/collapse button
@@ -270,6 +294,21 @@ var saa = saa || {};
         saa.tutkain.lightningTimestep = 15
         satButton.style = 'background-image: url(img/satellite-blue.png);'
         saa.tutkain.getTimeData()
+      }
+    });
+
+    // reload observations
+    var reloadButton = document.getElementById("force-reload");
+    reloadButton.addEventListener("click", function () {
+      if(typeof saa.tutkain.dataString !== 'undefined') {
+        var last = (saa.tutkain.dataString['dimension'].split('/'))[1]
+        last = moment(last)
+        var diff = moment().diff(last, "minutes")
+        // add check to prevent unnecessary getcapabilities polling
+        if(diff > 10 && (saa.tutkain.dataString['dimension'].split('/'))[2] === 'PT5M')
+        saa.tutkain.getTimeData('reload')
+        if(diff > 20 && (saa.tutkain.dataString['dimension'].split('/'))[1] === 'PT15M')
+        saa.tutkain.getTimeData('reload')
       }
     });
 

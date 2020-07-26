@@ -8,7 +8,7 @@ var saa = saa || {};
   var useDebug = true
   saa.tutkain.map
 
-  var dataString
+  saa.tutkain.dataString
   var timeDimensionControl
   var mobileUser = false
 
@@ -104,6 +104,17 @@ var saa = saa || {};
     }
 
     if (type == 'reload') {
+      saa.tutkain.map.spin(true, {
+        lines: 14,
+        length: 25,
+        width: 27,
+        radius: 80,
+        scale: 0.35,
+        corners: 1,
+        speed: 1.4,
+        animation: 'spinner-line-fade-quick',
+        color: '#b1b1b1'
+      })
       $.ajax({
         dataType: 'json',
         url: 'php/dataparser.php',
@@ -112,12 +123,14 @@ var saa = saa || {};
           server: wmsEndPoint
         },
         error: function (request, status, error) {
+          saa.tutkain.map.spin(false)
           console.log(request.responseText);
         },
         success: function (data) {
-          dataString = data
+          saa.tutkain.map.spin(false)
+          saa.tutkain.dataString = data
           tutkain.reloadTimedimension(data['dimension'])
-          saa.lightning.init(dataString['dimension'], saa.tutkain.timeInterval)
+          saa.lightning.init(saa.tutkain.dataString['dimension'], saa.tutkain.timeInterval)
         }
       })
     } else {
@@ -143,9 +156,9 @@ var saa = saa || {};
           console.log(request.responseText);
         },
         success: function (data) {
-          dataString = data
+          saa.tutkain.dataString = data
           tutkain.updateTimedimension(data)
-          saa.lightning.init(dataString['dimension'], saa.tutkain.timeInterval)
+          saa.lightning.init(saa.tutkain.dataString['dimension'], saa.tutkain.timeInterval)
         },
         complete: function() {
           saa.tutkain.map.spin(false)
@@ -191,6 +204,14 @@ var saa = saa || {};
     saa.tutkainControl.buildLightningControl()
     saa.tutkainControl.buildControl()
     saa.tutkainControl.buildInfo()
+    saa.tutkainControl.buildReload()        
+    
+    document.getElementById('force-reload').onclick = function() {
+      $('#reload-image').addClass('active');
+      setTimeout(function() {
+        $('#reload-image').removeClass('active');
+      }, 1000);
+    }
 
     saa.tutkain.map.on('move', function () {
       var lat = map.getCenter().lat
