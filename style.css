@@ -138,10 +138,6 @@ body {
   pointer-events: auto;
 }
 
-.leaflet-control-toggle-info:hover {
-  background-image: url(img/satellite-blue.png);
-}
-
 .leaflet-control-toggle-info:hover, 
 .leaflet-control-toggle-info:active {
   background-color: #f4f4f4;
