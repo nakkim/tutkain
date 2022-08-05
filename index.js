@@ -17,7 +17,9 @@ var saa = saa || {};
   var eumetsatWMS = '//eumetview.eumetsat.int/geoserver/wms'
 
   saa.tutkain.timeInterval    = localStorage.getItem('timeInterval')     ? localStorage.getItem('timeInterval')    : 1
-  saa.tutkain.showSatellite   = localStorage.getItem('showSatellite')    ? localStorage.getItem('showSatellite')   : false
+  // saa.tutkain.showSatellite   = localStorage.getItem('showSatellite')    ? localStorage.getItem('showSatellite')   : false
+  saa.tutkain.showSatellite   = false
+  localStorage.setItem('showSatellite', false)
   saa.tutkain.showFlash       = localStorage.getItem('showFlash')        ? localStorage.getItem('showFlash')       : true
   saa.tutkain.animFrameRate   = localStorage.getItem('animFrameRate')    ? localStorage.getItem('animFrameRate')   : 1000
   saa.tutkain.collapseOptions = localStorage.getItem('collapseOptions')  ? localStorage.getItem('collapseOptions') : false
@@ -192,9 +194,7 @@ var saa = saa || {};
       self.map.fitBounds(bounds)
     }
 
-    var CartoDB = L.tileLayer('https://api.mapbox.com/styles/v1/nakkim/ck016yx4h2cbx1cmh1i5uf4ia/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibmFra2ltIiwiYSI6ImNqNWYzNzVvaDB3YmUyeHBuOWdwZnM0bHMifQ.QZCKhwf3ET5ujEeZ6_8X_Q', {
-      // attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
+    var CartoDB = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       maxZoom: 19
     }).addTo(self.map)
 
@@ -203,7 +203,7 @@ var saa = saa || {};
     // build satellite data controller button,
     // map open/collapse map control button
     // and map controls
-    saa.tutkainControl.buildSatelliteControl()
+    // saa.tutkainControl.buildSatelliteControl()
     saa.tutkainControl.buildLightningControl()
     saa.tutkainControl.buildControl()
     saa.tutkainControl.buildInfo()

@@ -14,26 +14,26 @@ var saa = saa || {};
   }
 
   // build satellite data toggle button
-  tutkainControl.buildSatelliteControl = function () {
-    L.Control.MapController = L.Control.extend({
-      onAdd: function (map) {
-        var container = L.DomUtil.create(
-          'div', 'leaflet-bar leaflet-control leaflet-control-custom leaflet-control-select-source-sat'
-        )
-        container.id = 'toggle-satellite-data'
-        if(saa.tutkain.showSatellite == 'true') container.style = 'background-image: url(img/satellite-blue.png);'
-        container.title = 'Satelliittikuvat'
-        L.DomEvent.disableClickPropagation(container)
+  // tutkainControl.buildSatelliteControl = function () {
+  //   L.Control.MapController = L.Control.extend({
+  //     onAdd: function (map) {
+  //       var container = L.DomUtil.create(
+  //         'div', 'leaflet-bar leaflet-control leaflet-control-custom leaflet-control-select-source-sat'
+  //       )
+  //       container.id = 'toggle-satellite-data'
+  //       if(saa.tutkain.showSatellite == 'true') container.style = 'background-image: url(img/satellite-blue.png);'
+  //       container.title = 'Satelliittikuvat'
+  //       L.DomEvent.disableClickPropagation(container)
 
-        return container
-      },
-      onRemove: function (map) { }
-    })
-    L.control.MapController = function (opts) {
-      return new L.Control.MapController(opts);
-    }
-    L.control.MapController({ position: 'topleft' }).addTo(map)
-  }
+  //       return container
+  //     },
+  //     onRemove: function (map) { }
+  //   })
+  //   L.control.MapController = function (opts) {
+  //     return new L.Control.MapController(opts);
+  //   }
+  //   L.control.MapController({ position: 'topleft' }).addTo(map)
+  // }
 
   // build lightning data toggle button
   tutkainControl.buildLightningControl = function () {
@@ -301,28 +301,28 @@ var saa = saa || {};
     });
 
     // show/hide satellite data layer
-    var satButton = document.getElementById("toggle-satellite-data");
-    satButton.addEventListener("click", function () {
-      //check to see if the layer is already on the map
-      //and add/remove as needed
-      if (saa.tutkain.map.hasLayer(saa.tutkain.satelliteTimeLayer) == true) {
-        saa.tutkain.satelliteTimeLayer.remove(saa.tutkain.map);
-        saa.tutkain.showSatellite = false
-        localStorage.setItem('showSatellite',false)
-        saa.tutkain.lightningIntervalStart = 5
-        saa.tutkain.lightningTimestep = 5
-        satButton.style = 'background-image: url(img/satellite.png);'
-        saa.tutkain.getTimeData()
-      } else {
-        saa.tutkain.satelliteTimeLayer.addTo(saa.tutkain.map);
-        saa.tutkain.showSatellite = true
-        localStorage.setItem('showSatellite',true)
-        saa.tutkain.lightningIntervalStart = 15
-        saa.tutkain.lightningTimestep = 15
-        satButton.style = 'background-image: url(img/satellite-blue.png);'
-        saa.tutkain.getTimeData()
-      }
-    });
+    // var satButton = document.getElementById("toggle-satellite-data");
+    // satButton.addEventListener("click", function () {
+    //   //check to see if the layer is already on the map
+    //   //and add/remove as needed
+    //   if (saa.tutkain.map.hasLayer(saa.tutkain.satelliteTimeLayer) == true) {
+    //     saa.tutkain.satelliteTimeLayer.remove(saa.tutkain.map);
+    //     saa.tutkain.showSatellite = false
+    //     localStorage.setItem('showSatellite',false)
+    //     saa.tutkain.lightningIntervalStart = 5
+    //     saa.tutkain.lightningTimestep = 5
+    //     satButton.style = 'background-image: url(img/satellite.png);'
+    //     saa.tutkain.getTimeData()
+    //   } else {
+    //     saa.tutkain.satelliteTimeLayer.addTo(saa.tutkain.map);
+    //     saa.tutkain.showSatellite = true
+    //     localStorage.setItem('showSatellite',true)
+    //     saa.tutkain.lightningIntervalStart = 15
+    //     saa.tutkain.lightningTimestep = 15
+    //     satButton.style = 'background-image: url(img/satellite-blue.png);'
+    //     saa.tutkain.getTimeData()
+    //   }
+    // });
 
     // reload observations
     var reloadButton = document.getElementById("force-reload");
